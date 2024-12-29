@@ -30,13 +30,9 @@ public class back_4485 {
 					board[i][j]=Integer.parseInt(X[j]);
 				}
 			}
+			dobfs(board,0,0);
+			System.out.println("Problem"+" "+count+": "+DP[0][0]);
 			
-			System.out.println("Problem"+" "+count+": "+dobfs(board,0,0));
-			for(int i=0;i<N;i++)
-			{
-				for(int j=0;j<N;j++)
-					System.out.println(i+" "+j+" "+DP[i][j]);
-			}
 			count++;
 		}
 	}
@@ -45,7 +41,7 @@ public class back_4485 {
 		
 		if(x==N-1&&y==N-1)
 		{
-			return board[N-1][N-1];
+			return 0;
 		}
 		if(DP[y][x]!=Integer.MAX_VALUE)
 			return DP[y][x];

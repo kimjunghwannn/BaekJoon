@@ -3,49 +3,63 @@ package algo;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 
-public class back_2467 {
-	public static void main(String args[]) throws NumberFormatException, IOException {
+public class back_2467 
+{
+	static long solutionArray[];
+	static long solutionA=0;
+	static long solutionB=0;
+	static long answer=Long.MAX_VALUE;
+	public static void main(String args[]) throws NumberFormatException, IOException 
+	{
 		BufferedReader id=new BufferedReader(new InputStreamReader(System.in));
-		int n=Integer.parseInt(id.readLine());
-		String input[]=id.readLine().split(" ");
-		int box[]=new int[n];
-		int turningIndex=0;
-		boolean one=false;
-		int acidsum;
-		int alkalinesum;
-		for(int i=0;i<n;i++)
-		{	
-			int a=Integer.parseInt(input[i]);
-			if(i>0&&box[i-1]<0&&box[i]>=0&&!one)
+		int N=Integer.parseInt(id.readLine());
+		String solutionInput[]=id.readLine().split(" ");
+		solutionArray=new long [N];
+		
+		for(int i=0;i<N;i++)
+			solutionArray[i]=Long.parseLong(solutionInput[i]);
+		Arrays.sort(solutionArray);
+		for(int i=0;i<N;i++)
+			findClosestToZero(i);
+		System.out.println(solutionA+" "+solutionB);
+	}
+
+	private static void findClosestToZero(int solutionIndex) 
+	{
+			int start=0;
+			int end=solutionArray.length-1;
+			while(start<=end)
+			{
+				int middle=(start+end)/2;
+				if(solutionArray[middle]+solutionArray[solutionIndex]>0)
 				{
-					turningIndex=i;
-					one=true;
+					end=middle-1;
 				}
-			box[i]=a;
-		}
-		if(box[turningIndex]==0)
-		{
-			if(turningIndex>0)
-			{
-				acidsum=Math.abs(box[turningIndex]+box[turningIndex-1]);
+				else
+				{
+					start=middle+1;
+				}
+				
+				if(solutionIndex==middle)
+					continue;
+				
+				
+				if(Math.abs(solutionArray[middle]+solutionArray[solutionIndex])<Math.abs(answer))
+				{
+					answer=solutionArray[middle]+solutionArray[solutionIndex];
+					if(solutionArray[solutionIndex]<solutionArray[middle])
+					{	
+						solutionA=solutionArray[solutionIndex];
+						solutionB=solutionArray[middle];
+					}
+					else
+					{
+						solutionA=solutionArray[middle];
+						solutionB=solutionArray[solutionIndex];
+					}
+				}
 			}
-			if(box.length-1>turningIndex)
-			{
-				alkalinesum=Math.abs(box[turningIndex]+box[turningIndex+1]);
-			}
-		}
-		else
-		{	
-			if(turningIndex>1)
-			{
-				acidsum=Math.abs(box[turningIndex-2]+box[turningIndex-1]);
-			}
-			if(box.length-1>turningIndex)
-			{
-				alkalinesum=Math.abs(box[turningIndex]+box[turningIndex+1]);
-			}
-			
-		}
 	}
 }

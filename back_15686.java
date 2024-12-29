@@ -89,6 +89,7 @@ public class back_15686 {
 				}
 			}
 			minSum=Math.min(minSum, sum);
+			return;
 		}
 		for(int i=index;i<chickenResArray.length;i++)
 		{
